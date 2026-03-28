@@ -23,6 +23,19 @@
     "deny": [],
     "ask": []
   },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay -v 30 /System/Library/Sounds/Glass.aiff"
+          }
+        ]
+      }
+    ]
+  },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "linear",
