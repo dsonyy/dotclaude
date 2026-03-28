@@ -1,0 +1,48 @@
+{
+  "mcpServers": {
+    "elasticsearch": {
+      "command": "npx",
+      "args": ["-y", "@elastic/mcp-server-elasticsearch"],
+      "env": {
+        "ES_URL": "https://my-security-project-f82fa3.es.us-west-2.aws.elastic.cloud",
+        "ES_API_KEY": "${ES_API_KEY}"
+      }
+    },
+    "betterstack": {
+      "type": "http",
+      "url": "https://mcp.betterstack.com"
+    },
+    "linear": {
+      "type": "http",
+      "url": "https://mcp.linear.app/mcp"
+    },
+    "sentry": {
+      "type": "http",
+      "url": "https://mcp.sentry.dev/mcp"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PAT}"
+      }
+    },
+    "clickup": {
+      "type": "http",
+      "url": "https://mcp.clickup.com/mcp"
+    },
+    "auth0": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@auth0/auth0-mcp-server", "run"],
+      "env": {
+        "DEBUG": "auth0-mcp"
+      }
+    },
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest", "--no-usage-statistics"]
+    }
+  }
+}
