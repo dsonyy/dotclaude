@@ -22,7 +22,7 @@ When invoked without arguments, explain the current conversation state: what was
 Always follow this structure:
 
 1. **One sentence TL;DR** — the single most important takeaway
-2. **Flat list of points** — no nesting, no sub-bullets, each point is one standalone fact or datapoint
+2. **Numbered list of points** — no nesting, no sub-bullets, each point is one standalone fact or datapoint, use 1. 2. 3. ordering
 3. Done. No closing summary, no "let me know if you have questions".
 
 ## Communication Rules
