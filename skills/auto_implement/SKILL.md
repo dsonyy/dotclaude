@@ -71,13 +71,45 @@ Execute the approved plan.
 6. When all phases are done, run a final `just precommit`
 7. Write a summary to `docs/auto-implement/<branch-name>/03-summary.md`
 
-### Step 4: Report
+### Step 4: Create PR
+
+After all phases are implemented and `just precommit` passes, automatically commit, push, and create a pull request:
+
+1. Run `git status` and `git diff --stat` to review all changes
+2. Run `git log --oneline -5` on the base branch to understand commit message conventions
+3. Stage all relevant changed files with `git add <files>` (never use `-A` or `.` blindly — exclude secrets, `.env`, large binaries)
+4. Create a commit following conventional commits format:
+   - `feat(scope): description` / `fix(scope): description` / `refactor(scope): description`
+   - Include a detailed body explaining what and why
+   - End with `Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>`
+5. Push the branch: `git push -u origin <branch-name>`
+6. Create the PR using `gh pr create` with:
+   - Clear, concise title (under 70 characters)
+   - `## Summary` section with bullet points of key changes
+   - `## Test plan` section with checkboxes for manual testing
+   - Footer: `🤖 Generated with [Claude Code](https://claude.com/claude-code)`
+7. Wait ~60 seconds, then poll CI checks (max 5 iterations, 60s apart):
+   ```bash
+   for i in {1..5}; do
+     gh pr checks <pr-number>
+     if [ $? -eq 0 ]; then break; fi
+     sleep 60
+   done
+   ```
+8. Check for review comments or CI failures:
+   - If CI fails or reviewers flag real issues: fix locally, create a NEW commit (never amend), push, and re-check
+   - Dismiss purely stylistic or false-positive feedback
+9. If CI still pending after 5 minutes, report current status and move on
+
+### Step 5: Report
 
 Present the final status:
+- PR URL
 - What was implemented (files changed)
-- All automated checks pass/fail
+- All CI check statuses (pass/fail/pending)
+- Any review comments and assessment (addressed vs dismissed)
 - What needs manual testing
-- The worktree branch name, ready for PR
+- Whether the PR is ready for human review
 
 ## Important Rules
 
@@ -86,4 +118,7 @@ Present the final status:
 3. **Pass artifacts forward** — each step reads the markdown produced by the previous step
 4. **Keep docs together** — all artifacts go in `docs/auto-implement/<branch-name>/`
 5. **Run checks after each phase** — don't accumulate breakage
-6. **For complex features** — if during research you discover the task is too complex for a linear workflow, say so and recommend the user run `/research_codebase`, `/create_plan`, and `/implement_plan` separately with more interactive guidance
+6. **Always create a PR** — after successful implementation, automatically commit, push, and open a PR
+7. **Never amend commits** — always create new commits for fixes; one commit per fix
+8. **Never force push** — use regular push only
+9. **For complex features** — if during research you discover the task is too complex for a linear workflow, say so and recommend the user run `/research_codebase`, `/create_plan`, and `/implement_plan` separately with more interactive guidance
