@@ -60,6 +60,19 @@ claude mcp list
 
 Should show all 8 servers. HTTP ones (`betterstack`, `linear`, `sentry`, `clickup`, `github`) show "Needs authentication" until you OAuth-authorize them in a Claude Code session.
 
+## Run (Windows / PowerShell)
+
+WSL is the recommended path on Windows — run the bash scripts above as-is. For **native** Windows, use the PowerShell ports instead:
+
+```powershell
+pwsh .claude\skills\run-dotclaude\install.ps1
+pwsh .claude\skills\run-dotclaude\register-mcps.ps1
+```
+
+`install.ps1` links the two directories (`agents`, `skills`) with **junctions** — no admin needed. The two files (`settings.json`, `.claude.json`) are linked with **symlinks**, which need either admin or **Developer Mode** enabled (Settings → Privacy & security → For developers). Enable Developer Mode once and `install.ps1` runs without elevation.
+
+The sounds hook (`play.py`) is not wired for native Windows — see the Gotchas below.
+
 ## Run (human path)
 
 Same as agent path — there's no GUI.
@@ -70,4 +83,6 @@ Same as agent path — there's no GUI.
 
 - **`register-mcps.sh` removes then re-adds** — this means any OAuth tokens stored in `~/.claude.json` for HTTP MCPs (linear, sentry, etc.) get cleared on re-run. Re-authorize in Claude Code after running it.
 
-- **Sounds hook is Linux/WSL-only as configured** — `play.py` detects the OS. On WSL it calls `wslpath` + `powershell.exe`. On macOS, switch the hook in `settings.json` to use `afplay` directly.
+- **Sounds hook is Linux/WSL-only as configured** — `play.py` detects the OS. On WSL it calls `wslpath` + `powershell.exe`. On macOS, switch the hook in `settings.json` to use `afplay` directly. On native Windows it has no path — adjust `play.py` or the hook to call `powershell.exe -c (New-Object Media.SoundPlayer ...).PlaySync()`.
+
+- **Native Windows symlinks need privilege** — directory junctions work unprivileged, but file symlinks (`settings.json`, `.claude.json`) require admin or Developer Mode. If `install.ps1` fails with a privilege error, enable Developer Mode.
