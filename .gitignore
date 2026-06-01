@@ -1,3 +1,4 @@
 worktrees
 *:Zone.Identifier
 .claude.json
+__pycache__/
