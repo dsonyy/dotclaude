@@ -23,6 +23,7 @@
     "deny": [],
     "ask": []
   },
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "linear",
@@ -45,7 +46,21 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/hooks/caveman-statusline.sh\""
+  },
+  "enabledPlugins": {
+    "telegram@claude-plugins-official": true,
+    "caveman@caveman": true
+  },
   "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    },
     "caveman": {
       "source": {
         "source": "github",
@@ -53,14 +68,12 @@
       }
     }
   },
-  "enabledPlugins": {
-    "caveman@caveman": true
+  "effortLevel": "xhigh",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "model": "opus",
-  "statusLine": {
-    "type": "command",
-    "command": "bash \"/home/dsonyy/.claude/plugins/cache/caveman/caveman/655b7d9c5431/src/hooks/caveman-statusline.sh\""
-  }
+  "voiceEnabled": true
 }
