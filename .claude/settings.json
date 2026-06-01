@@ -40,7 +40,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 $HOME/repo/dotclaude/.claude/sounds/play.py"
+            "command": "python3 $HOME/repos/dotclaude/.claude/sounds/play.py"
           }
         ]
       }
